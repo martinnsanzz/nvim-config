@@ -1,0 +1,145 @@
+ NVIM SHORTCUTS                      Space = the "leader" key   q closes this
+
+ Press Space and wait: a popup lists what can follow. Space f k searches
+ every shortcut by name. Ctrl = ⌃ (not Cmd: the terminal never sees Cmd).
+
+ THE ONE IDEA: MODES
+   NORMAL             moving around and giving commands (start here)
+   i  a  o            INSERT: type text (before / after cursor, new line)
+   Esc  or  Ctrl+j    back to NORMAL
+   v  V  Ctrl+v       VISUAL: select characters / lines / a block
+   :                  COMMAND line (:w save, :q quit, :help word)
+
+ FILES & SAVING
+   Ctrl+s             save (any mode)
+   Space W            save all
+   Space Q            quit nvim (asks about unsaved files)
+   :w  :q  :wq  :q!   save, close, both, close without saving
+
+ VS CODE EQUIVALENTS
+   Ctrl+p             find file by name               (Cmd+P)
+   Space f g          find text in the whole project   (Cmd+Shift+F)
+   Space f c          run any command                  (Cmd+Shift+P)
+   Space e            file tree (toggle)               (Cmd+B)
+   Ctrl+/             comment line / selection         (Cmd+/)
+   Ctrl+\             terminal (toggle)                (Ctrl+`)
+   F5  or  Space r r  run this file                    (F5)
+   F12  or  g d       go to definition                 (F12)
+   g r                all references                   (Shift+F12)
+   F2  or  Space c r  rename everywhere                (F2)
+   Space c a          quick fix                        (Cmd+.)
+   Space x x          problems panel                   (Cmd+Shift+M)
+   Tab  Shift+Tab     next / previous open file        (Ctrl+Tab)
+   Space w            close file tab                   (Cmd+W)
+   Space g g          git (lazygit)                    (source control)
+
+ MOVING (NORMAL mode)
+   h j k l            left down up right (arrows work too)
+   w  b  e            next word, back a word, end of word
+   0  ^  $            start of line, first letter, end of line
+   gg  G  42G         top, bottom, line 42
+   Ctrl+d  Ctrl+u     half a page down / up
+   %                  jump to the matching bracket
+   f x  ;             jump to the next x on the line, repeat
+   /word  n  N        search, next, previous (Esc clears highlight)
+   *                  search the word under the cursor
+   Ctrl+o  Ctrl+i     back / forward to where you were
+
+ EDITING (NORMAL mode)
+   x                  delete character
+   dd  yy  p  P       delete (cut) line, copy line, paste after / before
+   dw  cw  ciw        delete word, change word, change the whole word
+   ci"  ci(  ci{      change everything inside "", (), {}
+   D  C               delete / change to end of line
+   u  Ctrl+r          undo / redo
+   .                  repeat the last change
+   >>  <<             indent / unindent line
+   J  K (VISUAL)      move the selected lines down / up
+   Ctrl+a             select all
+   3dd  5j  2w        a number repeats: 3 lines, 5 down, 2 words
+
+ FIND (Space f …)        (in the list: Ctrl+j/k move, Enter open, Esc close)
+   Space f f          files                Space f o   recent files
+   Space f g          text in project      Space f w   word under cursor
+   Space f /          text in this file    Space f b   open files
+   Space f s          functions in file    Space f S   functions in project
+   Space f k          shortcuts            Space f h   help pages
+   Space f y          clipboard history    Space f r   reopen last search
+
+ CODE (needs a language server; Space c m installs more languages)
+   K                  docs for the thing under the cursor
+   Ctrl+k (INSERT)    function arguments
+   g d  g D           definition, declaration
+   g i  g t           implementation, type
+   g l                show the error under the cursor
+   ] e  [ e           next / previous error
+   Space c f          format file (or selection)
+   Space c o          switch between .c and .h
+   Space c i          show inline type hints
+   Space c h          Codam 42 header (saving updates it)
+
+ AUTOCOMPLETE (INSERT mode, pops up as you type)
+   Tab  Shift+Tab     next / previous suggestion (or snippet blank)
+   Enter              accept
+   Ctrl+Space         open the list      Ctrl+e   close it
+
+ RUN (Space r …)
+   F5  Space r r      run this file (C is compiled with -Wall -Wextra -Werror)
+   Space r m          make
+   Space r c          run any command (e.g. make re && ./push_swap 3 1 2)
+   Space r l          run the last command again
+
+ DEBUG (Space d …)       (compile with -g)
+   F9  Space d b      breakpoint on this line     Space d B  with a condition
+   F6  Space d c      start / continue
+   F10 Space d n      next line                   Space d i  step into
+   Space d o          step out                    Space d r  run to cursor
+   Space d e          value of the thing under the cursor
+   Space d u          show / hide the debug panels
+   Space d q          stop
+
+ FILE TREE (Space e)
+   j k  Enter  l h    move, open, open folder, close folder
+   a                  new file (end with / for a folder)
+   r  d               rename, delete
+   c  m  y  p         copy, move, copy to clipboard, paste
+   H                  show / hide hidden files
+   ?                  every tree shortcut
+
+ TABS & SPLITS
+   Tab  Shift+Tab     next / previous file      Space 1..9  file number N
+   Space w            close file                Space b o   close the others
+   Space v  Space -   split right / below       Space q     close split
+   Ctrl+h j k l       move between splits (also Space h j k l)
+   Ctrl+arrows        resize split
+   Space a            bookmark file             Ctrl+e      bookmarks
+   ] b  [ b           next / previous bookmark
+
+ TERMINAL
+   Ctrl+\             toggle the terminal       Space t t   at the bottom
+   Space t f          floating                  Space t v   on the right
+   Esc                scroll / copy in it (i to type again)
+   Ctrl+x             hide it
+
+ GIT
+   Space g g          lazygit (? shows its keys, q quits)
+   ] h  [ h           next / previous changed block
+   Space g p          preview the change        Space g r   undo the change
+   Space g s          stage the change          Space g b   who wrote this line
+   Space g d          diff this file            Space g e   changed files
+
+ PROBLEMS & MESSAGES
+   Space x x  x f     problems: project / this file
+   Space x s          outline (functions, structs)
+   Space x t          TODO / FIXME comments
+   Space x d          search all errors
+   Space n d  n h     dismiss messages, message history
+
+ LOOK
+   Space u c          try another color scheme (live preview)
+
+ NVIM ITSELF
+   :Lazy              plugins (U updates them)
+   :Mason             language servers, formatters, debuggers
+   :checkhealth       what's broken and why
+   vimtutor           (in a shell) 30-minute hands-on lesson
