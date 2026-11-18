@@ -11,6 +11,7 @@ return {
 	},
 	opts = {
 		open_mapping = [[<C-\>]],
+		autochdir = true, -- follow nvim into another project (Space p)
 		size = function(term)
 			return term.direction == "vertical" and 70 or 14
 		end,

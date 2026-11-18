@@ -3,6 +3,14 @@
  Press Space and wait: a popup lists what can follow. Space f k searches
  every shortcut by name. Ctrl = ⌃ (not Cmd: the terminal never sees Cmd).
 
+ PROJECTS (like VS Code's Open Folder)
+   nvim               pick a project (type to filter, Enter opens it)
+   Space p            switch to another project
+   Space e            file tree on the right (toggle)
+                      each project reopens the files you had open there
+                      the tree and a terminal open on start (Ctrl+\ hides it)
+   nvim file.c        open just that file, no picker
+
  THE ONE IDEA: MODES
    NORMAL             moving around and giving commands (start here)
    i  a  o            INSERT: type text (before / after cursor, new line)
@@ -64,7 +72,7 @@
    Space f /          text in this file    Space f b   open files
    Space f s          functions in file    Space f S   functions in project
    Space f k          shortcuts            Space f h   help pages
-   Space f y          clipboard history    Space f r   reopen last search
+   Space f r          reopen last search
 
  CODE (needs a language server; Space c m installs more languages)
    K                  docs for the thing under the cursor
@@ -76,7 +84,6 @@
    Space c f          format file (or selection)
    Space c o          switch between .c and .h
    Space c i          show inline type hints
-   Space c h          Codam 42 header (saving updates it)
 
  AUTOCOMPLETE (INSERT mode, pops up as you type)
    Tab  Shift+Tab     next / previous suggestion (or snippet blank)
@@ -99,7 +106,7 @@
    Space d q          stop
 
  FILE TREE (Space e)
-   j k  Enter  l h    move, open, open folder, close folder
+   j k  Enter  l h    move, open, open folder, close folder (or click)
    a                  new file (end with / for a folder)
    r  d               rename, delete
    c  m  y  p         copy, move, copy to clipboard, paste
@@ -112,8 +119,6 @@
    Space v  Space -   split right / below       Space q     close split
    Ctrl+h j k l       move between splits (also Space h j k l)
    Ctrl+arrows        resize split
-   Space a            bookmark file             Ctrl+e      bookmarks
-   ] b  [ b           next / previous bookmark
 
  TERMINAL
    Ctrl+\             toggle the terminal       Space t t   at the bottom
@@ -134,9 +139,6 @@
    Space x t          TODO / FIXME comments
    Space x d          search all errors
    Space n d  n h     dismiss messages, message history
-
- LOOK
-   Space u c          try another color scheme (live preview)
 
  NVIM ITSELF
    :Lazy              plugins (U updates them)

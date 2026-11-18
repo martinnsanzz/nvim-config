@@ -1,6 +1,6 @@
--- Getting around: file tree, search, bookmarks, clipboard history, git.
+-- Getting around: projects, file tree, search, git.
 return {
-	-- File tree on the left (VS Code's explorer)
+	-- File tree on the right (VS Code's explorer)
 	{
 		"nvim-neo-tree/neo-tree.nvim",
 		branch = "v3.x",
@@ -26,8 +26,17 @@ return {
 		opts = {
 			close_if_last_window = true,
 			popup_border_style = "rounded",
+			-- Look like VS Code's explorer
+			default_component_configs = {
+				indent = { with_markers = true, indent_marker = "│", last_indent_marker = "└" },
+				git_status = {
+					-- Letters after the name, like VS Code
+					symbols = { added = "A", modified = "M", deleted = "D", renamed = "R", untracked = "U" },
+				},
+			},
 			window = {
-				width = 32,
+				position = "right",   -- "left" (default), "right", "top", "bottom" or "float"
+				width = 30,
 				mappings = {
 					["l"] = "open",
 					["h"] = "close_node",
@@ -35,12 +44,38 @@ return {
 				},
 			},
 			filesystem = {
-				hijack_netrw_behavior = "open_current",
+				hijack_netrw_behavior = "open_default", -- `nvim .` opens the tree in its usual place (right)
 				follow_current_file = { enabled = true },
 				use_libuv_file_watcher = true,
 				filtered_items = { visible = true, hide_dotfiles = false, hide_gitignored = false },
 			},
 		},
+	},
+
+	-- Projects: each folder remembers its open files (lua/config/projects.lua)
+	{
+		"folke/persistence.nvim",
+		event = "BufReadPre",
+		opts = {},
+		keys = { { "<leader>p", function() require("config.projects").pick() end, desc = "Switch project" } },
+		init = function()
+			local group = vim.api.nvim_create_augroup("projects", { clear = true })
+			-- The tree would come back as an empty window; leave it out of the session
+			vim.api.nvim_create_autocmd("User", {
+				group = group,
+				pattern = "PersistenceSavePre",
+				command = "silent! Neotree close",
+			})
+			-- `nvim` on its own asks for a project; `nvim file` / `nvim .` skip the
+			-- picker and open the file tree (right) and a terminal (bottom) straight away
+			vim.api.nvim_create_autocmd("VimEnter", {
+				group = group,
+				callback = function()
+					local projects = require("config.projects")
+					vim.schedule(vim.fn.argc() == 0 and projects.pick or projects.panels)
+				end,
+			})
+		end,
 	},
 
 	-- Fuzzy finder for files, words, recent files, symbols...
@@ -51,7 +86,6 @@ return {
 			"nvim-lua/plenary.nvim",
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 			"nvim-telescope/telescope-ui-select.nvim",
-			"andrew-george/telescope-themes",
 		},
 		keys = {
 			{ "<C-p>", "<cmd>Telescope find_files<CR>", desc = "Find file" },
@@ -66,7 +100,6 @@ return {
 			{ "<leader>fc", "<cmd>Telescope commands<CR>", desc = "Commands (like Cmd+Shift+P)" },
 			{ "<leader>fr", "<cmd>Telescope resume<CR>", desc = "Reopen last search" },
 			{ "<leader>xd", "<cmd>Telescope diagnostics<CR>", desc = "Search all errors" },
-			{ "<leader>uc", "<cmd>Telescope themes<CR>", desc = "Color scheme" },
 		},
 		config = function()
 			local telescope = require("telescope")
@@ -96,47 +129,11 @@ return {
 				pickers = {
 					find_files = { hidden = true },
 				},
-				extensions = {
-					themes = {
-						enable_previewer = false,
-						enable_live_preview = true,
-						persist = { enabled = false },
-						light_themes = { ignore = true },
-					},
-				},
 			})
 			pcall(telescope.load_extension, "fzf")
 			telescope.load_extension("ui-select")
-			telescope.load_extension("themes")
-			pcall(telescope.load_extension, "neoclip")
 			pcall(telescope.load_extension, "noice")
 		end,
-	},
-
-	-- Bookmark up to a handful of files and jump between them
-	{
-		"ThePrimeagen/harpoon",
-		branch = "harpoon2",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		keys = {
-			{ "<leader>a", function() require("harpoon"):list():add() end, desc = "Bookmark this file" },
-			{ "<C-e>", function() local h = require("harpoon") h.ui:toggle_quick_menu(h:list()) end,
-				desc = "Bookmarked files" },
-			{ "<leader>fl", function() local h = require("harpoon") h.ui:toggle_quick_menu(h:list()) end,
-				desc = "Bookmarked files" },
-			{ "]b", function() require("harpoon"):list():next() end, desc = "Next bookmark" },
-			{ "[b", function() require("harpoon"):list():prev() end, desc = "Previous bookmark" },
-		},
-		config = function() require("harpoon"):setup() end,
-	},
-
-	-- Everything you've copied, searchable
-	{
-		"AckslD/nvim-neoclip.lua",
-		event = "VeryLazy",
-		dependencies = { "nvim-telescope/telescope.nvim" },
-		keys = { { "<leader>fy", "<cmd>Telescope neoclip<CR>", desc = "Clipboard history" } },
-		opts = {},
 	},
 
 	-- Close brackets and quotes as you type

@@ -30,32 +30,3 @@ autocmd("FileType", {
 		vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = args.buf, silent = true })
 	end,
 })
-
--- phosphor only colors the plugins Danitell0 used; give the rest green too.
-autocmd("ColorScheme", {
-	group = group,
-	pattern = "phosphor",
-	callback = function()
-		local set = vim.api.nvim_set_hl
-		set(0, "NeoTreeNormal", { link = "Normal" })
-		set(0, "NeoTreeNormalNC", { link = "Normal" })
-		set(0, "NeoTreeDirectoryName", { fg = "#00ffc8" })
-		set(0, "NeoTreeDirectoryIcon", { fg = "#00ffc8" })
-		set(0, "NeoTreeRootName", { fg = "#a8ff3e", bold = true })
-		set(0, "NeoTreeGitModified", { fg = "#ffcc44" })
-		set(0, "NeoTreeGitUntracked", { fg = "#a8ff3e" })
-		set(0, "NeoTreeWinSeparator", { fg = "#1c3a24" })
-		set(0, "GitSignsAdd", { fg = "#46d97a" })
-		set(0, "GitSignsChange", { fg = "#ffcc44" })
-		set(0, "GitSignsDelete", { fg = "#ff5555" })
-		set(0, "SnacksDashboardHeader", { fg = "#46d97a" })
-		set(0, "SnacksDashboardIcon", { fg = "#00ffc8" })
-		set(0, "SnacksDashboardDesc", { fg = "#46d97a" })
-		set(0, "SnacksDashboardKey", { fg = "#a8ff3e", bold = true })
-		set(0, "SnacksDashboardFooter", { fg = "#1f6b33", italic = true })
-		set(0, "IblIndent", { fg = "#0e1f12" })
-		set(0, "IblScope", { fg = "#1f6b33" })
-		set(0, "DapBreakpoint", { fg = "#ff5555" })
-		set(0, "DapStopped", { fg = "#a8ff3e" })
-	end,
-})

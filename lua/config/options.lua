@@ -3,9 +3,8 @@ local opt = vim.opt
 vim.g.mapleader = " " -- Space starts most shortcuts
 vim.g.maplocalleader = " "
 
--- Line numbers: absolute on the cursor line, relative elsewhere (for 5j etc.)
+-- Line numbers, like VS Code
 opt.number = true
-opt.relativenumber = true
 opt.cursorline = true
 opt.signcolumn = "yes" -- room for git and error marks, so text doesn't jump
 
@@ -20,6 +19,7 @@ opt.mouse = "a"
 opt.clipboard = "unnamedplus" -- y and p use the macOS clipboard
 opt.undofile = true -- undo survives closing the file
 opt.swapfile = false
+opt.sessionoptions = { "buffers", "curdir", "folds", "help", "tabpages", "winsize" } -- what a project remembers
 opt.confirm = true -- ask to save instead of refusing to quit
 opt.updatetime = 250
 opt.timeoutlen = 400 -- how long which-key waits before showing hints

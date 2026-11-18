@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	spec = { { import = "plugins" } },
-	install = { colorscheme = { "phosphor" } },
+	install = { colorscheme = { "vscode" } },
 	checker = { enabled = false }, -- update with :Lazy update, not on its own
 	change_detection = { notify = false },
 	ui = { border = "rounded" },

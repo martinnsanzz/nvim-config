@@ -66,7 +66,3 @@ map("n", "[e", function() vim.diagnostic.jump({ count = -1, severity = "ERROR", 
 
 -- This cheat sheet
 map("n", "<leader>?", function() require("config.cheatsheet").open() end, { desc = "All shortcuts" })
-
--- Codam/42 header (lua/config/header42.lua)
-require("config.header42").setup()
-map("n", "<leader>ch", "<cmd>Stdheader<CR>", { desc = "Codam 42 header" })

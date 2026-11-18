@@ -14,6 +14,18 @@ local header = [[
 return {
 	{ "nvim-tree/nvim-web-devicons", lazy = true },
 
+	-- VS Code's Dark+ colors (set in init.lua)
+	{
+		"Mofiqul/vscode.nvim",
+		lazy = false,
+		priority = 1000,
+		opts = {
+			style = "dark",
+			transparent = false, -- true lets Ghostty's see-through background show
+			italic_comments = true,
+		},
+	},
+
 	-- Start screen, plus small helpers (closing tabs, lazygit, inputs)
 	{
 		"folke/snacks.nvim",
@@ -30,7 +42,7 @@ return {
 					header = header,
 					keys = {
 						{ icon = " ", key = "f", desc = "Find file", action = ":Telescope find_files" },
-						{ icon = " ", key = "e", desc = "File tree", action = ":Neotree reveal" },
+						{ icon = "\u{f07c} ", key = "p", desc = "Open project", action = function() require("config.projects").pick() end },
 						{ icon = "󰍉 ", key = "g", desc = "Find word in project", action = ":Telescope live_grep" },
 						{ icon = " ", key = "r", desc = "Recent files", action = ":Telescope oldfiles" },
 						{ icon = " ", key = "n", desc = "New file", action = ":ene | startinsert" },
@@ -60,7 +72,7 @@ return {
 				mode = "buffers",
 				separator_style = "thin",
 				diagnostics = "nvim_lsp",
-				show_buffer_close_icons = false,
+				show_buffer_close_icons = true, -- click the x to close, like VS Code
 				close_command = function(n) Snacks.bufdelete(n) end,
 				offsets = { { filetype = "neo-tree", text = "EXPLORER", text_align = "left", separator = true } },
 			},
@@ -74,7 +86,7 @@ return {
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		opts = {
 			options = {
-				theme = "auto",
+				theme = "vscode",
 				globalstatus = true,
 				component_separators = "│",
 				section_separators = "",
@@ -130,7 +142,7 @@ return {
 			{ "<leader>nh", "<cmd>NoiceHistory<CR>", desc = "Message history" },
 		},
 	},
-	{ "rcarriga/nvim-notify", lazy = true, opts = { background_colour = "#000000", stages = "fade" } },
+	{ "rcarriga/nvim-notify", lazy = true, opts = { stages = "fade" } },
 
 	-- Pops up the possible next keys after you press Space (or g, [, ...)
 	{
@@ -145,9 +157,9 @@ return {
 				{ "<leader>f", group = "find" },
 				{ "<leader>g", group = "git" },
 				{ "<leader>n", group = "messages" },
+				{ "<leader>p", desc = "Switch project" },
 				{ "<leader>r", group = "run" },
 				{ "<leader>t", group = "terminal" },
-				{ "<leader>u", group = "look" },
 				{ "<leader>x", group = "problems" },
 				{ "<leader>1", hidden = true }, { "<leader>2", hidden = true }, { "<leader>3", hidden = true },
 				{ "<leader>4", hidden = true }, { "<leader>5", hidden = true }, { "<leader>6", hidden = true },
@@ -169,34 +181,6 @@ return {
 	},
 	{ "Bekaboo/deadcolumn.nvim", event = { "BufReadPost", "BufNewFile" } },
 
-	-- The cursor leaves a short trail when it jumps
-	{
-		"sphamba/smear-cursor.nvim",
-		event = "VeryLazy",
-		opts = {
-			smear_between_buffers = true,
-			smear_between_neighbor_lines = true,
-			scroll_buffer_space = true,
-			stiffness = 0.8,
-			trailing_stiffness = 0.6,
-			stiffness_insert_mode = 0.7,
-			trailing_stiffness_insert_mode = 0.7,
-			damping = 0.95,
-			damping_insert_mode = 0.95,
-			distance_stop_animating = 0.5,
-			time_interval = 7,
-			transparent_bg_fallback_color = "#303030",
-		},
-	},
-
 	-- Rendered markdown headings, lists and code blocks
 	{ "OXY2DEV/markview.nvim", ft = "markdown" },
-
-	-- Other color schemes to try with Space u c (the choice isn't saved;
-	-- change init.lua to keep one)
-	{ "navarasu/onedark.nvim", lazy = true },
-	{ "folke/tokyonight.nvim", lazy = true },
-	{ "catppuccin/nvim", name = "catppuccin", lazy = true },
-	{ "rebelot/kanagawa.nvim", lazy = true },
-	{ "ribru17/bamboo.nvim", lazy = true },
 }
