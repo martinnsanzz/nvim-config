@@ -11,9 +11,9 @@ My Neovim, set up to work like VS Code. Run `nvim`, pick a project, and you get 
 │                                                   │ EXPLORER │
 │                    code                           │  (tree)  │
 │                                                   │          │
-├───────────────────────────────────────────────────┴──────────┤
-│                    terminal                                  │
-└──────────────────────────────────────────────────────────────┘
+├───────────────────────────────────────────────────┤          │
+│                    terminal                       │          │
+└───────────────────────────────────────────────────┴──────────┘
 ```
 
 The tree and the terminal open by themselves on every start:

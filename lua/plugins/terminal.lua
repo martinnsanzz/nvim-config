@@ -13,12 +13,29 @@ return {
 		open_mapping = [[<C-\>]],
 		autochdir = true, -- follow nvim into another project (Space p)
 		size = function(term)
-			return term.direction == "vertical" and 70 or 14
+			return term.direction == "vertical" and 70 or 20
 		end,
 		shade_terminals = false,
 		start_in_insert = true,
 		persist_mode = false,
 		float_opts = { border = "rounded" },
+		-- A bottom terminal opens under every window, tree included. Push the tree
+		-- back to the far right at full height so the terminal only spans the code.
+		on_open = function(term)
+			if term.direction ~= "horizontal" then
+				return
+			end
+			for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+				if vim.bo[vim.api.nvim_win_get_buf(win)].filetype == "neo-tree" then
+					local width = vim.api.nvim_win_get_width(win)
+					local height = vim.api.nvim_win_get_height(term.window)
+					vim.api.nvim_win_call(win, function() vim.cmd("wincmd L") end)
+					vim.api.nvim_win_set_width(win, width)
+					vim.api.nvim_win_set_height(term.window, height)
+					return
+				end
+			end
+		end,
 	},
 	init = function()
 		-- In a terminal: Esc or Ctrl+j to scroll/copy, Ctrl+x to hide it
