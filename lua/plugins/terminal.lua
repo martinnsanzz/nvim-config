@@ -38,6 +38,38 @@ return {
 		end,
 	},
 	init = function()
+		-- Closing the last code window would leave the terminal filling the left
+		-- side. Put an empty editor back above it instead.
+		vim.api.nvim_create_autocmd("WinClosed", {
+			group = vim.api.nvim_create_augroup("keep-editor", { clear = true }),
+			callback = function()
+				vim.schedule(function()
+					local term
+					for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+						local ft = vim.bo[vim.api.nvim_win_get_buf(win)].filetype
+						if vim.api.nvim_win_get_config(win).relative ~= "" then
+							-- floating windows (popups, float terminal) don't count
+						elseif ft == "toggleterm" then
+							term = win
+						elseif ft ~= "neo-tree" then
+							return -- an editor window is still there
+						end
+					end
+					if term then
+						local editor
+						vim.api.nvim_win_call(term, function()
+							vim.cmd("aboveleft new")
+							editor = vim.api.nvim_get_current_win()
+						end)
+						local size = require("toggleterm.config").get("size")
+						vim.api.nvim_win_set_height(term, type(size) == "function" and size({ direction = "horizontal" }) or size)
+						vim.api.nvim_set_current_win(editor)
+						vim.cmd("stopinsert")
+					end
+				end)
+			end,
+		})
+
 		-- In a terminal: Esc or Ctrl+j to scroll/copy, Ctrl+x to hide it
 		vim.api.nvim_create_autocmd("TermOpen", {
 			pattern = "term://*toggleterm#*",

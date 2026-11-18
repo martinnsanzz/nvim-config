@@ -95,6 +95,7 @@
    Space r m          make
    Space r c          run any command (e.g. make re && ./push_swap 3 1 2)
    Space r l          run the last command again
+                      runs in the bottom terminal (it opens if hidden)
 
  DEBUG (Space d …)       (compile with -g)
    F9  Space d b      breakpoint on this line     Space d B  with a condition
@@ -124,7 +125,9 @@
    Ctrl+\             toggle the terminal       Space t t   at the bottom
    Space t f          floating                  Space t v   on the right
    Esc                scroll / copy in it (i to type again)
-   Ctrl+x             hide it
+   Ctrl+x             hide it (Ctrl+\ brings it back, same shell)
+   exit               end the shell for good (Ctrl+\ starts a new one)
+                      closing the last code window leaves an empty one
 
  GIT
    Space g g          lazygit (? shows its keys, q quits)

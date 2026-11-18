@@ -23,18 +23,15 @@ local runners = {
 	make = "make",
 }
 
+-- Run in the bottom terminal (#1, the one Ctrl+\ toggles) instead of opening a
+-- second one under it. `true`: find it even while it's hidden.
 local function terminal()
-	if not M.term then
-		M.term = require("toggleterm.terminal").Terminal:new({
-			direction = "horizontal",
-			display_name = "run",
-			close_on_exit = false,
-		})
+	local T = require("toggleterm.terminal")
+	local term = T.get(1, true) or T.Terminal:new({ id = 1, direction = "horizontal" })
+	if not term:is_open() then
+		term:open()
 	end
-	if not M.term:is_open() then
-		M.term:open()
-	end
-	return M.term
+	return term
 end
 
 function M.send(cmd)
