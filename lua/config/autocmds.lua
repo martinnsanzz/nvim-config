@@ -21,6 +21,47 @@ autocmd("BufReadPost", {
 -- Pick up changes made outside nvim (git, claude in another pane)
 autocmd({ "FocusGained", "BufEnter" }, { group = group, command = "silent! checktime" })
 
+-- Autosave like VS Code's "afterDelay": save 1 second after you stop typing,
+-- and right away when you switch files or leave nvim
+local autosave_delay = 1000
+local timers = {}
+
+local function autosave(buf)
+	if not vim.api.nvim_buf_is_valid(buf) then return end
+	local bo = vim.bo[buf]
+	if not bo.modified or bo.buftype ~= "" or not bo.modifiable or bo.readonly then return end
+	local name = vim.api.nvim_buf_get_name(buf)
+	if name == "" or vim.fn.isdirectory(vim.fn.fnamemodify(name, ":h")) == 0 then return end
+	vim.api.nvim_buf_call(buf, function() vim.cmd("silent! lockmarks update") end)
+end
+
+autocmd({ "TextChanged", "TextChangedI" }, {
+	group = group,
+	callback = function(args)
+		local timer = timers[args.buf] or vim.uv.new_timer()
+		timers[args.buf] = timer
+		timer:stop()
+		timer:start(autosave_delay, 0, vim.schedule_wrap(function() autosave(args.buf) end))
+	end,
+})
+
+autocmd({ "BufLeave", "FocusLost" }, {
+	group = group,
+	callback = function(args) autosave(args.buf) end,
+})
+
+autocmd("BufDelete", {
+	group = group,
+	callback = function(args)
+		local timer = timers[args.buf]
+		if timer then
+			timer:stop()
+			timer:close()
+			timers[args.buf] = nil
+		end
+	end,
+})
+
 -- q closes help, quickfix and other read-only panels
 autocmd("FileType", {
 	group = group,

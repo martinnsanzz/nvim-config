@@ -19,6 +19,8 @@
    :                  COMMAND line (:w save, :q quit, :help word)
 
  FILES & SAVING
+                      autosaves 1s after you stop typing, and when you
+                      switch files or leave nvim (like VS Code)
    Ctrl+s             save (any mode)
    Space W            save all
    Space Q            quit nvim (asks about unsaved files)

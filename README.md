@@ -65,7 +65,7 @@ Plugins are managed by [lazy.nvim](https://github.com/folke/lazy.nvim). `lazy-lo
 | `init.lua` | Loads everything below and picks the color scheme. |
 | `lua/config/options.lua` | Editor settings: line numbers, tabs (4-wide real tabs, Codam norm), clipboard, search. |
 | `lua/config/keymaps.lua` | Shortcuts that aren't tied to a plugin (save, comment, splits, tabs, run). |
-| `lua/config/autocmds.lua` | Small automatic things (flash on copy, reopen at last position, reload changed files). |
+| `lua/config/autocmds.lua` | Small automatic things (autosave, flash on copy, reopen at last position, reload changed files). |
 | `lua/config/lazy.lua` | Installs and loads the plugin manager. |
 | `lua/config/projects.lua` | The project picker, and opening the tree and terminal on start. |
 | `lua/config/run.lua` | The run button: `F5` compiles and runs the current file in a bottom terminal. |
