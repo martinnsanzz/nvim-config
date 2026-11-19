@@ -1,7 +1,7 @@
 -- Language smarts: errors as you type, go to definition, rename, autocomplete,
 -- formatting. Mason downloads the language servers and tools listed here.
 local servers = { "clangd", "lua_ls", "basedpyright", "bashls", "ts_ls", "jsonls" }
-local tools = { "clang-format", "stylua", "ruff", "prettier", "shfmt", "codelldb", "debugpy" }
+local tools = { "clang-format", "stylua", "autopep8", "prettier", "shfmt", "codelldb", "debugpy" }
 
 return {
 	{
@@ -39,7 +39,7 @@ return {
 			})
 			vim.lsp.config("basedpyright", {
 				settings = {
-					basedpyright = { analysis = { typeCheckingMode = "standard", diagnosticMode = "openFilesOnly" } },
+					basedpyright = { analysis = { typeCheckingMode = "off", diagnosticMode = "openFilesOnly" } },
 				},
 			})
 
@@ -171,7 +171,7 @@ return {
 				c = { "clang-format" },
 				cpp = { "clang-format" },
 				lua = { "stylua" },
-				python = { "ruff_format" },
+				python = { "autopep8" },
 				javascript = { "prettier" },
 				typescript = { "prettier" },
 				json = { "prettier" },

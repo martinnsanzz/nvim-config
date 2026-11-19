@@ -81,7 +81,7 @@ Plugins are managed by [lazy.nvim](https://github.com/folke/lazy.nvim). `lazy-lo
 
 ## Languages
 
-These are set up: C/C++ (clangd), Python (basedpyright, ruff), Lua, Bash, JavaScript/TypeScript and JSON. To add a language:
+These are set up: C/C++ (clangd), Python (basedpyright, autopep8), Lua, Bash, JavaScript/TypeScript and JSON. To add a language:
 1. Install its tools with `:Mason` (`i` installs).
 2. Add them to the `servers` or `tools` list in `lua/plugins/lsp.lua`, so a fresh install gets them too.
 3. For the run button, add a line to `runners` in `lua/config/run.lua`.
@@ -93,6 +93,8 @@ For Python projects with a `.venv`, add this to the project's `pyproject.toml` s
 venvPath = "."
 venv = ".venv"
 ```
+
+Python has no type checking or linting in the editor (basedpyright's type checks are off); run flake8 and mypy yourself, e.g. with `make lint`. autopep8 follows the project's `[flake8]` / `[pycodestyle]` settings.
 
 Formatting is never automatic, because clang-format doesn't follow the Codam norm. `Space c f` formats when you want it.
 
